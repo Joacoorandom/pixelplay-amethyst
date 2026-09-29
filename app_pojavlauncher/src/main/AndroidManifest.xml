@@ -24,16 +24,20 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <meta-data android:name="android.game_mode_config"
         android:resource="@xml/game_mode_config" />
     <application
-        android:name=".PojavApplication"
-        android:allowBackup="true"
+        android:name="gg.pixelplay.android.PixelApplication"
+        android:allowBackup="false"
         android:allowNativeHeapPointerTagging="false"
         android:appCategory="game"
         android:hasFragileUserData="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/pp_launcher"
+        android:roundIcon="@mipmap/pp_launcher"
         android:isGame="true"
         android:label="@string/app_name"
         android:process=":launcher"
@@ -48,16 +52,24 @@
             android:value="ratio_float" />
 
         <activity
-            android:name=".TestStorageActivity"
+            android:name="gg.pixelplay.android.MainActivity"
             android:exported="true"
             android:label="@string/app_short_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PixelPlay"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TestStorageActivity"
+            android:exported="false"
+            android:label="@string/app_short_name"
+            android:launchMode="singleTop" />
         <activity
             android:name=".LauncherActivity"
             android:label="@string/app_short_name"
@@ -128,6 +140,10 @@
             </intent-filter>
         </provider>
 
+        <service
+            android:name="gg.pixelplay.android.social.CallService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
         <service android:name=".services.ProgressService"
             android:foregroundServiceType="dataSync"/>
         <service android:name=".services.GameService" android:process=":game"

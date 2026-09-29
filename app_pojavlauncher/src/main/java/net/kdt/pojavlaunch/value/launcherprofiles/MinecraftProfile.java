@@ -23,6 +23,8 @@ public class MinecraftProfile {
 	public boolean useANGLE;
 	public String controlFile;
 	public MinecraftResolution[] resolution;
+	/** host[:port] to join right after the game starts (Pixel Play auto-join). */
+	public String pixelServer;
 
 
 	public static MinecraftProfile createTemplate(){
@@ -57,5 +59,6 @@ public class MinecraftProfile {
 		controlFile = profile.controlFile;
 		resolution = profile.resolution;
 		useANGLE = profile.useANGLE;
+		pixelServer = profile.pixelServer;
 	}
 }

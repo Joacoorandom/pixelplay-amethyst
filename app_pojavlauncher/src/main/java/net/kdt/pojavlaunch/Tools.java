@@ -455,7 +455,7 @@ public final class Tools {
 
         // Pre-process specific files
         disableSplash(gamedir);
-        String[] launchArgs = getMinecraftClientArgs(minecraftAccount, versionInfo, gamedir);
+        String[] launchArgs = appendServerArgs(getMinecraftClientArgs(minecraftAccount, versionInfo, gamedir), versionInfo, minecraftProfile.pixelServer);
 
         // Select the appropriate openGL version
         OldVersionsUtils.selectOpenGlVersion(versionInfo);
@@ -796,6 +796,28 @@ public final class Tools {
             } //TODO: implement (?maybe?)
         }
         return JSONUtils.insertJSONValueList(minecraftArgs.toArray(new String[0]), varArgMap);
+    }
+
+    private static String[] appendServerArgs(String[] args, JMinecraftVersionList.Version versionInfo, String server) {
+        if (!isValidString(server)) return args;
+        List<String> out = new ArrayList<>(Arrays.asList(args));
+        boolean quickPlay = false;
+        try {
+            Date released = DateUtils.getOriginalReleaseDate(versionInfo);
+            // 1.20 (June 2023) replaced --server/--port with --quickPlayMultiplayer
+            quickPlay = released != null && !DateUtils.dateBefore(released, 2023, 5, 1);
+        } catch (ParseException ignored) {}
+        if (quickPlay) {
+            out.add("--quickPlayMultiplayer");
+            out.add(server);
+        } else {
+            int colon = server.lastIndexOf(':');
+            out.add("--server");
+            out.add(colon > 0 ? server.substring(0, colon) : server);
+            out.add("--port");
+            out.add(colon > 0 ? server.substring(colon + 1) : "25565");
+        }
+        return out.toArray(new String[0]);
     }
 
     public static String[] getMinecraftClientArgs(MinecraftAccount profile, JMinecraftVersionList.Version versionInfo, File gameDir) {

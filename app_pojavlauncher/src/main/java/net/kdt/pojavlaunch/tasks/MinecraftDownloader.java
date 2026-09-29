@@ -63,6 +63,13 @@ public class MinecraftDownloader {
 
     private boolean isLocalProfile = false;
     private boolean isOnline;
+    private boolean mForceDownload = false;
+
+    /** Download even when the selected account is offline (Pixel Play accounts are validated by the Pixel API). */
+    public MinecraftDownloader forceDownload() {
+        mForceDownload = true;
+        return this;
+    }
 
     /**
      * Start the game version download process on the global executor service.
@@ -75,9 +82,9 @@ public class MinecraftDownloader {
                       @NonNull String realVersion,
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         if(activity != null){
-            isLocalProfile = Tools.isLocalProfile(activity);
+            isLocalProfile = !mForceDownload && Tools.isLocalProfile(activity);
             isOnline = Tools.isOnline(activity);
-            Tools.switchDemo(Tools.isDemoProfile(activity));
+            Tools.switchDemo(!mForceDownload && Tools.isDemoProfile(activity));
 
         } else {
             isLocalProfile = true;
