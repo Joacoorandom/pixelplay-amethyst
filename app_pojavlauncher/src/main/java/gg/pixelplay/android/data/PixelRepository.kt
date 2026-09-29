@@ -315,6 +315,7 @@ class PixelRepository(private val context: Context, private val scope: Coroutine
                 delay(3_000)
                 _launch.value = LaunchState.Idle
             } catch (e: Exception) {
+                android.util.Log.e("PixelLaunch", "Launch failed", e)
                 Notifications.cancelLaunch(context)
                 _launch.value = LaunchState.Failed(e.message ?: e.javaClass.simpleName)
             }

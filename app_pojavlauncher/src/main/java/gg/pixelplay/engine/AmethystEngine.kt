@@ -6,6 +6,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.kdt.mcgui.ProgressLayout
 import gg.pixelplay.android.data.ApiException
 import gg.pixelplay.android.data.GameProfile
@@ -42,6 +43,8 @@ import kotlin.coroutines.resumeWithException
 
 /** Runs Minecraft through the bundled Amethyst (PojavLauncher) runtime: JRE, LWJGL, renderers and loaders. */
 class AmethystEngine : GameEngine {
+    private companion object { const val TAG = "PixelEngine" }
+
     override val name = "Amethyst"
 
     @Volatile private var initialized = false
@@ -168,6 +171,20 @@ class AmethystEngine : GameEngine {
     }
 
     private suspend fun download(activity: Activity, id: String, progress: (String, Float?) -> Unit) {
+        var attempt = 0
+        while (true) {
+            try {
+                return downloadOnce(activity, id, progress)
+            } catch (e: Exception) {
+                Log.w(TAG, "Download of $id failed (attempt ${attempt + 1})", e)
+                if (++attempt >= 3) throw e
+                progress("Reintentando descarga ($attempt/2)…", null)
+                delay(3_000L * attempt)
+            }
+        }
+    }
+
+    private suspend fun downloadOnce(activity: Activity, id: String, progress: (String, Float?) -> Unit) {
         val normalized = AsyncMinecraftDownloader.normalizeVersionId(id)
         val listed = AsyncMinecraftDownloader.getListedVersion(normalized)
         progress("Descargando Minecraft $normalized", null)
