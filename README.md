@@ -1,3 +1,17 @@
+<p align="center"><img src="https://raw.githubusercontent.com/Joacoorandom/Joacoorandom/main/assets/projects/pixelplay-amethyst.svg" width="100%" alt="pixelplay-amethyst — fork de AngelAuraMC/Amethyst-Android" /></p>
+
+## Sobre esta copia
+
+Launcher de Minecraft Java para Android, basado en Angel Aura Amethyst. La rama de esta copia es `pixelplay`.
+
+Fork mantenido en **Joacoorandom/pixelplay-amethyst**. Proyecto original: **[AngelAuraMC/Amethyst-Android](https://github.com/AngelAuraMC/Amethyst-Android)**.
+
+[Comparar con el original](https://github.com/AngelAuraMC/Amethyst-Android/compare/v3_openjdk...Joacoorandom:pixelplay-amethyst:pixelplay) · [Ver ramas de esta copia](https://github.com/Joacoorandom/pixelplay-amethyst/branches) · [Mi perfil](https://github.com/Joacoorandom)
+
+La documentación original, su licencia y los créditos se conservan a continuación.
+
+---
+
 <h1 align="center">Angel Aura Amethyst</h1>
 
 <img src="https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Amethyst logo">
@@ -151,3 +165,4 @@ Future plans include:
 * Enhancing the mod installation experience.
 
 We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/AngelAuraMC/Amethyst-Android/issues).
+
